@@ -13,9 +13,10 @@ Produccion.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'cultivo',
+      model: 'cultivos',
       key: 'id_cultivo',
     },
+    onDelete: 'CASCADE',
   },
   cantidad: {
     type: DataTypes.FLOAT,
@@ -32,8 +33,8 @@ Produccion.init({
 }, {
   sequelize,
   modelName: 'produccion',
+  tableName: 'produccion',
   timestamps: false,
-  freezeTableName: true,
 });
 
 module.exports = Produccion;

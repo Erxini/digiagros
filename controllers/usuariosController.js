@@ -79,20 +79,20 @@ const { Usuarios } = require("../database/models/usuarios");
   };
 
   // 7. Obtener un usuario por nombre y contraseña
-  const getLogin = async (req, res) => {
-    try {
-      const usuario = await UsuariosService.getLogin(
-        req.params.nombre,
-        req.params.contrasena
-      );
-      if (!usuario) {
-        return res.status(404).json({ error: "Usuario no encontrado" });
-      }
-      res.json(usuario);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
+  // const getLogin = async (req, res) => {
+  //   try {
+  //     const usuario = await UsuariosService.getLogin(
+  //       req.body.nombre,
+  //       req.body.password
+  //     );
+  //     if (!usuario) {
+  //       return res.status(404).json({ error: "Usuario no encontrado" });
+  //     }
+  //     res.json(usuario);
+  //   } catch (error) {
+  //     res.status(500).json({ error: error.message });
+  //   }
+  // };
 
   // 8. Eliminar un usuario por ID
   const deleteUsuario = async (req, res) => {
@@ -122,7 +122,7 @@ module.exports = {
   getUsuarioByRol,
   createUsuario,
   updateUsuario,
-  getLogin,
+  //getLogin,
   deleteUsuario,
   deleteAllUsuarios,
 };

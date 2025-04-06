@@ -13,9 +13,10 @@ Suelo.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'cultivo',
+      model: 'cultivos',
       key: 'id_cultivo',
     },
+    onDelete: 'CASCADE',
   },
   tipo_suelo: {
     type: DataTypes.STRING(50),
@@ -36,8 +37,8 @@ Suelo.init({
 }, {
   sequelize,
   modelName: 'suelo',
+  tableName: 'suelo',
   timestamps: false,
-  freezeTableName: true,
 });
 
 module.exports = Suelo;

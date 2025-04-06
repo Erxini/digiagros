@@ -13,7 +13,7 @@ Cultivo.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'usuario',
+      model: 'usuarios',
       key: 'id_usuario',
     },
   },
@@ -57,8 +57,8 @@ Cultivo.init({
 }, {
   sequelize,
   modelName: 'cultivo',
+  tableName: 'cultivos',
   timestamps: false,
-  freezeTableName: true,
 });
 
 module.exports = Cultivo;

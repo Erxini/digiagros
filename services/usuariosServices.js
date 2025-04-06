@@ -70,17 +70,17 @@ const Usuario = require("../database/models/usuarios");
     }
   };
     // 7.Obtener un usuario por nombre y contraseña
-  const getLogin = async (nombre, contrasena) => {
-    try {
-      const usuario = await Usuario.findOne({ where: { nombre: nombre, contrasena: contrasena } });
-      if (!usuario) {
-        throw new Error("Usuario no encontrado");
-      }
-      return usuario;
-    } catch (error) {
-      throw new Error("Error al mostrar el usuario por nombre y contraseña: " + error.message);
-    }
-  };
+  // const getLogin = async (nombre, password) => {
+  //   try {
+  //     const usuario = await Usuario.findOne({ where: { nombre: nombre, password: password } });
+  //     if (!usuario) {
+  //       throw new Error("Usuario no encontrado");
+  //     }
+  //     return usuario;
+  //   } catch (error) {
+  //     throw new Error("Error al mostrar el usuario por nombre y contraseña: " + error.message);
+  //   }
+  // };
     // 8.Eliminar un usuario por ID
   const deleteUsuario = async (id) => {
     try {
@@ -110,7 +110,7 @@ module.exports = {
   getUsuarioByEmail,
   getUsuarioByRol,
   updateUsuario,
-  getLogin,
+  //getLogin,
   deleteUsuario,
   deleteAllUsuarios
 };

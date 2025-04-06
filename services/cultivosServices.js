@@ -57,7 +57,7 @@ const Cultivo = require("../database/models/cultivos");
     // 6.Eliminar todos los cultivos
     const deleteAllCultivos = async () => {
       try {
-        return await Cultivo.destroy({ where: {}, truncate: true });
+        return await Cultivo.destroy({ where: {} });
       } catch (error) {
         throw new Error("Error al eliminar todos los cultivos: " + error.message);
       }

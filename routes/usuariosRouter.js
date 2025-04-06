@@ -22,7 +22,7 @@ router.post("/", UsuariosController.createUsuario);
 router.put("/:id", UsuariosController.updateUsuario);
 
 // 7. Obtener un usuario por nombre y contraseña
-router.post("/login", UsuariosController.getLogin);
+//router.post("/login", UsuariosController.getLogin);
 
 // 8. Eliminar un usuario por ID
 router.delete("/:id", UsuariosController.deleteUsuario);

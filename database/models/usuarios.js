@@ -66,22 +66,17 @@ Usuario.init({
         notNull: {
             msg: "El rol del usuario no puede ser nulo"
         },
-        len: {
-            args: [1, 1],
-            msg: "El rol del usuario debe tener 1 caracter"
-        },
         isIn: {
         args: [['Admin', 'Tec', 'Agri']],
            msg: "El rol del usuario debe ser Admin, Tec o Agri"   
         }
-
     }
   },
 }, {
   sequelize,
   modelName: 'usuario', 
+  tableName: 'usuarios',
   timestamps: false, 
-  freezeTableName: true,
 });
 
 module.exports = Usuario;

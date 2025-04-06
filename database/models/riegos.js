@@ -13,9 +13,10 @@ Riego.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'cultivo',
+      model: 'cultivos',
       key: 'id_cultivo',
     },
+    onDelete: 'CASCADE',
   },
   fecha: {
     type: DataTypes.DATE,
@@ -32,8 +33,8 @@ Riego.init({
 }, {
   sequelize,
   modelName: 'riego',
+  tableName: 'riegos',
   timestamps: false,
-  freezeTableName: true,
 });
 
 module.exports = Riego;
