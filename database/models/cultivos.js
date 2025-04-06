@@ -20,14 +20,31 @@ Cultivo.init({
   tipo: {
     type: DataTypes.STRING(50),
     allowNull: false,
+    validate: {
+      len: [1, 50],
+    },
   },
   fecha_siembra: {
     type: DataTypes.DATE,
     allowNull: false,
+    validate: {
+      isDate: true,
+      isBefore: {
+        args: [new Date().toISOString()],
+        msg: "La fecha de siembra no puede ser mayor a la fecha actual",
+      },
+    },
   },
   fecha_cosecha: {
     type: DataTypes.DATE,
     allowNull: true,
+    validate: {
+      isDate: true,
+      isAfter: {
+        args: [new Date().toISOString()],
+        msg: "La fecha de cosecha no puede ser menor a la fecha de siembra",
+      },
+    },
   },
   estado: {
     type: DataTypes.STRING(20),

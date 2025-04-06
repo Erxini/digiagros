@@ -1,65 +1,126 @@
 const Riego = require("../database/models/riegos");
 
-class RiegosService {
-    // 1.Obtener todos los riegos
-  static async getAllRiegos() {
-    return await Riego.findAll();
-  }
+  // 1.Obtener todos los riegos
+  const getAllRiegos = async () => {
+    try {
+      const riegos = await Riego.findAll();
+      return riegos;
+    } catch (error) {
+      throw new Error("Error al obtener los riegos: " + error.message);
+    }
+  };
   // 2.Obtener un riego por ID
-  static async getRiegoById(id) {
-    return await Riego.findByPk(id);
-  }
-    // 3.Crear un nuevo riego
-  static async createRiego(data) {
-    return await Riego.create(data);
-  }
-    // 4.Actualizar un riego por ID
-  static async updateRiego(id, data) {
-    const riego = await Riego.findByPk(id);
-    if (!riego) throw new Error("Riego no encontrado");
-    return await riego.update(data);
-  }
-   
-    // 5.Eliminar un riego por ID
-  static async deleteRiego(id) {
-    const riego = await Riego.findByPk(id);
-    if (!riego) throw new Error("Riego no encontrado");
-    return await riego.destroy();
-  }
-  // 6.Obtener riegos por cultivo ID
-    static async getRiegosByCultivoId(cultivoId) {
-        return await Riego.findAll({
-        where: {
-            cultivoId: cultivoId,
-        },
-        });
+  const getRiegoById = async (id) => {
+    try {
+      const riego = await Riego.findByPk(id);
+      if (!riego) throw new Error("Riego no encontrado");
+      return riego;
+    } catch (error) {
+      throw new Error("Error al obtener el riego: " + error.message);
     }
-  // 7.Modificar el riego por cultivo ID
-    static async updateRiegoByCultivoId(cultivoId, data) {
-        const riego = await Riego.findOne({
-            where: {
-                cultivoId: cultivoId,
-            },
-        });
-        if (!riego) throw new Error("Riego no encontrado");
-        return await riego.update(data);
+  };
+  // 3.Crear un nuevo riego
+  const createRiego = async (data) => {
+    try {
+      const riego = await Riego.create(data);
+      return riego;
+    } catch (error) {
+      throw new Error("Error al crear el riego: " + error.message);
     }
-    // 8.Obtener riegos por fecha
-    static async getRiegosByFecha(fecha) {
-        return await Riego.findAll({
-            where: {
-                fecha: fecha,
-            },
-        });
+  };
+  // 4.Actualizar un riego por ID
+  const updateRiego = async (id, data) => {
+    try {
+      const riego = await Riego.findByPk(id);
+      if (!riego) throw new Error("Riego no encontrado");
+      return await riego.update(data);
+    } catch (error) {
+      throw new Error("Error al actualizar el riego: " + error.message);
     }
-    // 9.Obtener riegos por cantidad de agua
-    static async getRiegosByCantidadAgua(cantidadAgua) {
-        return await Riego.findAll({
-            where: {
-                cantidadAgua: cantidadAgua,
-            },
-        });
+  };   
+  // 5.Obtener riegos por cultivo ID
+    const getRiegosByCultivoId = async (cultivoId) => {
+        try {
+            const riegos = await Riego.findAll({
+                where: {
+                    cultivoId: cultivoId,
+                },
+            });
+            return riegos;
+        } catch (error) {
+            throw new Error("Error al obtener los riegos por cultivo ID: " + error.message);
+        }
+    };
+  // 6.Modificar el riego por cultivo ID
+    const updateRiegoByCultivoId = async (cultivoId, data) => {
+        try {
+            const riego = await Riego.findOne({
+                where: {
+                    cultivoId: cultivoId,
+                },
+            });
+            if (!riego) throw new Error("Riego no encontrado");
+            return await riego.update(data);
+        } catch (error) {
+            throw new Error("Error al modificar el riego por cultivo ID: " + error.message);
+        }
+    };
+  // 7.Obtener riegos por fecha
+    const getRiegosByFecha = async (fecha) => {
+        try {
+            const riegos = await Riego.findAll({
+                where: {
+                    fecha: fecha,
+                },
+            });
+            return riegos;
+        } catch (error) {
+            throw new Error("Error al obtener los riegos por fecha: " + error.message);
+        }
+    };
+  // 8.Obtener riegos por cantidad de agua
+    const getRiegosByCantidadAgua = async (cantidadAgua) => {
+        try {
+            const riegos = await Riego.findAll({
+                where: {
+                    cantidadAgua: cantidadAgua,
+                },
+            });
+            return riegos;
+        } catch (error) {
+            throw new Error("Error al obtener los riegos por cantidad de agua: " + error.message);
+        }
+    };
+  // 9.Eliminar un riego por ID
+  const deleteRiego = async (id) => {
+    try {
+      const riego = await Riego.findByPk(id);
+      if (!riego) throw new Error("Riego no encontrado");
+      await riego.destroy();
+      return { message: "Riego eliminado" };
+    } catch (error) {
+      throw new Error("Error al eliminar el riego: " + error.message);
     }
-}
+  };
+  // 10. Eliminar todos los riegos
+    const deleteAllRiegos = async () => {
+        try {
+            await Riego.destroy({ where: {}, truncate: true });
+            return { message: "Todos los riegos eliminados" };
+        } catch (error) {
+            throw new Error("Error al eliminar todos los riegos: " + error.message);
+        }
+    };
 
-module.exports = RiegosService;
+module.exports = {
+    getAllRiegos,
+    getRiegoById,
+    createRiego,
+    updateRiego,
+    deleteRiego,
+    getRiegosByCultivoId,
+    updateRiegoByCultivoId,
+    getRiegosByFecha,
+    getRiegosByCantidadAgua,
+    deleteAllRiegos
+};

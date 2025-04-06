@@ -1,30 +1,73 @@
 const Cultivo = require("../database/models/cultivos");
 
-class CultivosService {
     // 1.Obtener todos los cultivos
-  static async getAllCultivos() {
-    return await Cultivo.findAll();
-  }
+    const getAllCultivos = async () => {
+      try {
+        return await Cultivo.findAll();
+      } catch (error) {
+        throw new Error("Error al mostrar todos los cultivos: " + error.message);
+      }
+    };
     // 2.Obtener un cultivo por ID
-  static async getCultivoById(id) {
-    return await Cultivo.findByPk(id);
-  }
+    const getCultivoById = async (id) => {
+      try {
+        const cultivo = await Cultivo.findByPk(id);
+        if (!cultivo) {
+          throw new Error("Cultivo no encontrado");
+        }
+        return cultivo;
+      } catch (error) {
+        throw new Error("Error al mostrar el cultivo por ID: " + error.message);
+      }
+    }; 
     // 3.Crear un nuevo cultivo
-  static async createCultivo(data) {
-    return await Cultivo.create(data);
-  }
+    const createCultivo = async (cultivoData) => {
+      try {
+        return await Cultivo.create(cultivoData);
+      } catch (error) {
+        throw new Error("Error al crear el cultivo: " + error.message);
+      }
+    };
+  
     // 4.Modificar un cultivo por ID
-  static async updateCultivo(id, data) {
-    const cultivo = await Cultivo.findByPk(id);
-    if (!cultivo) throw new Error("Cultivo no encontrado");
-    return await cultivo.update(data);
-  }
+    const updateCultivo = async (id, cultivoData) => {
+      try {
+        const cultivo = await Cultivo.findByPk(id);
+        if (!cultivo) {
+          throw new Error("Cultivo no encontrado");
+        }
+        return await cultivo.update(cultivoData);
+      } catch (error) {
+        throw new Error("Error al modificar el cultivo: " + error.message);
+      }
+    };
+ 
     // 5.Eliminar un cultivo por ID de suelo
-  static async deleteCultivo(id) {
-    const cultivo = await Cultivo.findByPk(id);
-    if (!cultivo) throw new Error("Cultivo no encontrado");
-    return await cultivo.destroy();
-  }
-}
+    const deleteCultivo = async (id) => {
+      try {
+        const cultivo = await Cultivo.findByPk(id);
+        if (!cultivo) {
+          throw new Error("Cultivo no encontrado");
+        }
+        return await cultivo.destroy();
+      } catch (error) {
+        throw new Error("Error al eliminar el cultivo: " + error.message);
+      }
+    };
+    // 6.Eliminar todos los cultivos
+    const deleteAllCultivos = async () => {
+      try {
+        return await Cultivo.destroy({ where: {}, truncate: true });
+      } catch (error) {
+        throw new Error("Error al eliminar todos los cultivos: " + error.message);
+      }
+    };
 
-module.exports = CultivosService;
+module.exports =  { 
+    getAllCultivos,
+    getCultivoById,
+    createCultivo,
+    updateCultivo,
+    deleteCultivo,
+    deleteAllCultivos,
+  };

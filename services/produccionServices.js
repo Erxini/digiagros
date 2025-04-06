@@ -1,82 +1,171 @@
 const Produccion = require("../database/models/produccion");
 
-class ProduccionService {
-  // 1. Obtener todos los registros de producción
-  static async getAllProduccion() {
-    return await Produccion.findAll();
-  }
-
+  // 1. Obtener toda la producción
+  const getAllProduccion = async () => {
+    try {
+      const producciones = await Produccion.findAll();
+      return producciones;
+    } catch (error) {
+      throw new Error("Error al obtener la producción: " + error.message);
+    }
+  };
   // 2. Obtener un registro de producción por ID
-  static async getProduccionById(id) {
-    return await Produccion.findByPk(id);
-  }
-
+  const getProduccionById = async (id) => {
+    try {
+      const produccion = await Produccion.findByPk(id);
+      if (!produccion) throw new Error("Producción no encontrada");
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al obtener la producción: " + error.message);
+    }
+  };
   // 3. Crear un nuevo registro de producción
-  static async createProduccion(data) {
-    return await Produccion.create(data);
-  }
-
+  const createProduccion = async (data) => {
+    try {
+      const produccion = await Produccion.create(data);
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al crear la producción: " + error.message);
+    }
+  };
   // 4. Modificar un registro de producción por ID
-  static async updateProduccion(id, data) {
-    const produccion = await Produccion.findByPk(id);
-    if (!produccion) throw new Error("Producción no encontrada");
-    return await produccion.update(data);
-  }
-
+  const updateProduccion = async (id, data) => {
+    try {
+      const produccion = await Produccion.findByPk(id);
+      if (!produccion) throw new Error("Producción no encontrada");
+      await produccion.update(data);
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al modificar la producción: " + error.message);
+    }
+  };
   // 5. Obtener un registro de producción por cultivo y suelo
-  static async getProduccionByCultivoAndSuelo(cultivoId, sueloId) {
-    return await Produccion.findOne({
-      where: {
-        id_cultivo: cultivoId,
-        id_suelo: sueloId,
-      },
-    });
-  }
-
-  // 6. Eliminar un registro de producción por ID
-  static async deleteProduccion(id) {
-    const produccion = await Produccion.findByPk(id);
-    if (!produccion) throw new Error("Producción no encontrada");
-    return await produccion.destroy();
-  }
-
+  const getProduccionByCultivoAndSuelo = async (cultivoId, sueloId) => {
+    try {
+      const produccion = await Produccion.findAll({
+        where: {
+          id_cultivo: cultivoId,
+          id_suelo: sueloId,
+        },
+      });
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al obtener la producción: " + error.message);
+    }
+  };
+  // 6. Obtener producción por cultivo y calidad
+  const getProduccionByCultivoAndCalidad = async (cultivoId, calidad) => {
+    try {
+      const produccion = await Produccion.findAll({
+        where: {
+          id_cultivo: cultivoId,
+          calidad: calidad,
+        },
+      });
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al obtener la producción: " + error.message);
+    }
+  };
   // 7. Obtener producción por cultivo
-  static async getProduccionByCultivo(cultivoId) {
-    return await Produccion.findAll({
-      where: { id_cultivo: cultivoId },
-    });
-  }
-
+  const getProduccionByCultivo = async (cultivoId) => {
+    try {
+      const produccion = await Produccion.findAll({
+        where: {
+          id_cultivo: cultivoId,
+        },
+      });
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al obtener la producción: " + error.message);
+    }
+  };
   // 8. Obtener producción por fecha
-  static async getProduccionByFecha(fecha) {
-    return await Produccion.findAll({
-      where: { fecha: fecha },
-    });
-  }
-
+  const getProduccionByFecha = async (fecha) => {
+    try {
+      const produccion = await Produccion.findAll({
+        where: {
+          fecha: fecha,
+        },
+      });
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al obtener la producción: " + error.message);
+    }
+  };
   // 9. Obtener producción por calidad
-  static async getProduccionByCalidad(calidad) {
-    return await Produccion.findAll({
-      where: { calidad: calidad },
-    });
-  }
-
+  const getProduccionByCalidad = async (calidad) => {
+    try {
+      const produccion = await Produccion.findAll({
+        where: {
+          calidad: calidad,
+        },
+      });
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al obtener la producción: " + error.message);
+    }
+  };
   // 10. Obtener producción por cantidad
-  static async getProduccionByCantidad(cantidad) {
-    return await Produccion.findAll({
-      where: { cantidad: cantidad },
-    });
-  }
-
+  const getProduccionByCantidad = async (cantidad) => {
+    try {
+      const produccion = await Produccion.findAll({
+        where: {
+          cantidad: cantidad,
+        },
+      });
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al obtener la producción: " + error.message);
+    }
+  };
   // 11. Obtener producción por calidad y cultivo
-  static async getProduccionByCultivoAndCantidad(cultivoId, cantidad) {
-    return await Produccion.findAll({
-      where: {
-        id_cultivo: cultivoId,
-        cantidad: cantidad,
-      },
-    });
-  }
-}
+  const getProduccionByCalidadAndCultivo = async (calidad, cultivoId) => {
+    try {
+      const produccion = await Produccion.findAll({
+        where: {
+          calidad: calidad,
+          id_cultivo: cultivoId,
+        },
+      });
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al obtener la producción: " + error.message);
+    }
+  };
+  // 12. Eliminar un registro de producción por ID
+  const deleteProduccion = async (id) => {
+    try {
+      const produccion = await Produccion.findByPk(id);
+      if (!produccion) throw new Error("Producción no encontrada");
+      await produccion.destroy();
+      return produccion;
+    } catch (error) {
+      throw new Error("Error al eliminar la producción: " + error.message);
+    }
+  };
+  // 13. Eliminar toda la producción
+  const deleteAllProduccion = async () => {
+    try {
+      await Produccion.destroy({ where: {}, truncate: true });
+      return "Producción eliminada correctamente";
+    } catch (error) {
+      throw new Error("Error al eliminar la producción: " + error.message);
+    }
+  };
 
-module.exports = ProduccionService;
+module.exports = {
+  getAllProduccion,
+  getProduccionById,
+  createProduccion,
+  updateProduccion,
+  getProduccionByCultivoAndSuelo,
+  getProduccionByCultivoAndCalidad,
+  getProduccionByCultivo,
+  getProduccionByFecha,
+  getProduccionByCalidad,
+  getProduccionByCantidad,
+  getProduccionByCalidadAndCultivo,
+  deleteProduccion,
+  deleteAllProduccion,
+};

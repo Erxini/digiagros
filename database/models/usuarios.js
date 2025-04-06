@@ -69,7 +69,12 @@ Usuario.init({
         len: {
             args: [1, 1],
             msg: "El rol del usuario debe tener 1 caracter"
+        },
+        isIn: {
+        args: [['Admin', 'Tec', 'Agri']],
+           msg: "El rol del usuario debe ser Admin, Tec o Agri"   
         }
+
     }
   },
 }, {
