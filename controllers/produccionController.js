@@ -48,10 +48,8 @@ const ProduccionService = require("../services/produccionServices");
   // 5. Obtener un registro de producción por cultivo y suelo
   const getProduccionByCultivoAndSuelo = async (req, res) => {
     try {
-      const produccion = await ProduccionService.getProduccionByCultivoAndSuelo(
-        req.params.cultivoId,
-        req.params.sueloId
-      );
+      const { cultivoId, sueloId } = req.params; // Extraer correctamente los parámetros
+      const produccion = await ProduccionService.getProduccionByCultivoAndSuelo(cultivoId, sueloId);
       if (!produccion.length) {
         return res.status(404).json({ error: "Producción no encontrada" });
       }
@@ -64,10 +62,8 @@ const ProduccionService = require("../services/produccionServices");
   // 6. Obtener producción por cultivo y calidad
   const getProduccionByCultivoAndCalidad = async (req, res) => {
     try {
-      const produccion = await ProduccionService.getProduccionByCultivoAndCalidad(
-        req.params.cultivoId,
-        req.params.calidad
-      );
+      const { cultivoId, calidad } = req.params;
+      const produccion = await ProduccionService.getProduccionByCultivoAndCalidad(cultivoId, calidad);
       if (!produccion.length) {
         return res.status(404).json({ error: "Producción no encontrada" });
       }
@@ -79,7 +75,8 @@ const ProduccionService = require("../services/produccionServices");
   // 7. Obtener producción por cultivo
   const getProduccionByCultivo = async (req, res) => {
     try {
-      const produccion = await ProduccionService.getProduccionByCultivo(req.params.cultivoId);
+      const { cultivoId } = req.params;
+      const produccion = await ProduccionService.getProduccionByCultivo(cultivoId);
       if (!produccion.length) {
         return res.status(404).json({ error: "Producción no encontrada" });
       }
@@ -128,10 +125,8 @@ const ProduccionService = require("../services/produccionServices");
   // 11. Obtener producción por calidad y cultivo
   const getProduccionByCalidadAndCultivo = async (req, res) => {
     try {
-      const produccion = await ProduccionService.getProduccionByCalidadAndCultivo(
-        req.params.calidad,
-        req.params.cultivoId
-      );
+      const { calidad, cultivoId } = req.params;
+      const produccion = await ProduccionService.getProduccionByCalidadAndCultivo(calidad, cultivoId);
       if (!produccion.length) {
         return res.status(404).json({ error: "Producción no encontrada" });
       }

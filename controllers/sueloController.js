@@ -45,8 +45,8 @@ const SueloService = require("../services/sueloServices");
   // 5. Obtener un registro por cultivo y suelo
   const getSueloByCultivoAndSuelo = async (req, res) => {
     try {
-      const { cultivoId, sueloId } = req.params;
-      const suelo = await SueloService.getSueloByCultivoAndSuelo(cultivoId, sueloId);
+      const { id, sueloId } = req.params;
+      const suelo = await SueloService.getSueloByCultivoAndSuelo(id, sueloId);
       if (!suelo) {
         return res.status(404).json({ error: "Suelo no encontrado" });
       }

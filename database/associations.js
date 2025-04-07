@@ -16,8 +16,8 @@ Riego.belongsTo(Cultivo, {foreignKey: "id_cultivo",});
 Cultivo.hasMany(Produccion, {foreignKey: "id_cultivo", onDelete: "CASCADE",});
 Produccion.belongsTo(Cultivo, {foreignKey: "id_cultivo",});
 
-// Relación Cultivo -> Suelo (Uno a Uno)
-Cultivo.hasOne(Suelo, {foreignKey: "id_cultivo", onDelete: "CASCADE",});
+// Relación Cultivo -> Suelo (Uno a Muchos)
+Cultivo.hasMany(Suelo, {foreignKey: "id_cultivo", onDelete: "CASCADE",});
 Suelo.belongsTo(Cultivo, {foreignKey: "id_cultivo",});
 
 module.exports = {

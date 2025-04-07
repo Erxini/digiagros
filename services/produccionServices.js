@@ -1,4 +1,7 @@
 const Produccion = require("../database/models/produccion");
+const Suelo = require("../database/models/suelo"); // Importa el modelo Suelo
+const Cultivo = require("../database/models/cultivos"); // Importa el modelo Cultivo
+const { Op } = require("sequelize"); // Importar Op de sequelize para usar operadores
 
   // 1. Obtener toda la producción
   const getAllProduccion = async () => {
@@ -43,10 +46,18 @@ const Produccion = require("../database/models/produccion");
   const getProduccionByCultivoAndSuelo = async (cultivoId, sueloId) => {
     try {
       const produccion = await Produccion.findAll({
-        where: {
-          id_cultivo: cultivoId,
-          id_suelo: sueloId,
-        },
+        include: [
+          {
+            model: Cultivo,
+            include: [
+              {
+                model: Suelo,
+                where: { id_suelo: sueloId }, // Filtra por id_suelo
+              },
+            ],
+            where: { id_cultivo: cultivoId }, // Filtra por id_cultivo
+          },
+        ],
       });
       return produccion;
     } catch (error) {
@@ -85,7 +96,9 @@ const Produccion = require("../database/models/produccion");
     try {
       const produccion = await Produccion.findAll({
         where: {
-          fecha: fecha,
+          fecha: {
+            [Op.between]: [`${fecha} 00:00:00`, `${fecha} 23:59:59`], // Rango de fechas para incluir todo el día
+          },
         },
       });
       return produccion;

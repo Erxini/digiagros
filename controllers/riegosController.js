@@ -40,7 +40,7 @@ const RiegosService = require("../services/riegosService");
   // 5.Obtener riegos por cultivo ID
   const getRiegosByCultivoId = async (req, res) => {
     try {
-      const riegos = await RiegosService.getRiegosByCultivoId(req.params.cultivoId);
+      const riegos = await RiegosService.getRiegosByCultivoId(req.params.id);
       res.json(riegos);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -49,7 +49,7 @@ const RiegosService = require("../services/riegosService");
   // 6.Modificar el riego por cultivo ID  
   const updateRiegoByCultivoId = async (req, res) => {
         try {
-            const riego = await RiegosService.updateRiegoByCultivoId(req.params.cultivoId, req.body);
+            const riego = await RiegosService.updateRiegoByCultivoId(req.params.id, req.body);
             res.json(riego);
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -66,13 +66,16 @@ const RiegosService = require("../services/riegosService");
     };
   // 8.Obtener riegos por cantidad de agua    
   const getRiegosByCantidadAgua = async (req, res) => {
-        try {
-            const riegos = await RiegosService.getRiegosByCantidadAgua(req.params.cantidadAgua);
-            res.json(riegos);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    };
+    try {
+      const riegos = await RiegosService.getRiegosByCantidadAgua(req.params.cantidad);
+      if (!riegos.length) {
+        return res.status(404).json({ error: "No se encontraron riegos con la cantidad de agua especificada" });
+      }
+      res.json(riegos);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
   // 9.Eliminar un riego por ID
   const deleteRiego = async (req, res) => {
     try {

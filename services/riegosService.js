@@ -1,4 +1,5 @@
 const Riego = require("../database/models/riegos");
+const { Op } = require("sequelize");
 
   // 1.Obtener todos los riegos
   const getAllRiegos = async () => {
@@ -39,11 +40,11 @@ const Riego = require("../database/models/riegos");
     }
   };   
   // 5.Obtener riegos por cultivo ID
-    const getRiegosByCultivoId = async (cultivoId) => {
+    const getRiegosByCultivoId = async (id_cultivo) => {
         try {
             const riegos = await Riego.findAll({
                 where: {
-                    cultivoId: cultivoId,
+                  id_cultivo: id_cultivo,
                 },
             });
             return riegos;
@@ -52,11 +53,11 @@ const Riego = require("../database/models/riegos");
         }
     };
   // 6.Modificar el riego por cultivo ID
-    const updateRiegoByCultivoId = async (cultivoId, data) => {
+    const updateRiegoByCultivoId = async (id_cultivo, data) => {
         try {
             const riego = await Riego.findOne({
                 where: {
-                    cultivoId: cultivoId,
+                  id_cultivo: id_cultivo,
                 },
             });
             if (!riego) throw new Error("Riego no encontrado");
@@ -70,7 +71,9 @@ const Riego = require("../database/models/riegos");
         try {
             const riegos = await Riego.findAll({
                 where: {
-                    fecha: fecha,
+                    fecha: {
+                        [Op.between]: [`${fecha} 00:00:00`, `${fecha} 23:59:59`], // Rango de fechas
+                    },
                 },
             });
             return riegos;
@@ -79,18 +82,20 @@ const Riego = require("../database/models/riegos");
         }
     };
   // 8.Obtener riegos por cantidad de agua
-    const getRiegosByCantidadAgua = async (cantidadAgua) => {
-        try {
-            const riegos = await Riego.findAll({
-                where: {
-                    cantidadAgua: cantidadAgua,
-                },
-            });
-            return riegos;
-        } catch (error) {
-            throw new Error("Error al obtener los riegos por cantidad de agua: " + error.message);
-        }
-    };
+  const getRiegosByCantidadAgua = async (cantidad_agua) => {
+    try {
+      const riegos = await Riego.findAll({
+        where: {
+          cantidad_agua: {
+            [Op.eq]: parseFloat(cantidad_agua), 
+          },
+        },
+      });
+      return riegos;
+    } catch (error) {
+      throw new Error("Error al obtener los riegos por cantidad de agua: " + error.message);
+    }
+  };
   // 9.Eliminar un riego por ID
   const deleteRiego = async (id) => {
     try {
