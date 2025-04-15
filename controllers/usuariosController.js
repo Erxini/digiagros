@@ -54,10 +54,14 @@ const { Usuarios } = require("../database/models/usuarios");
 
   // 5. Crear un nuevo usuario
   const createUsuario = async (req, res) => {
+    console.log(req.body)
     try {
       const usuario = await UsuariosService.createUsuario(req.body);
       res.status(201).json(usuario);
     } catch (error) {
+      if (error.name === 'SequelizeValidationError') {
+        return res.status(400).json({ error: error.errors.map(e => e.message).join(', ') });
+      }
       res.status(400).json({ error: error.message });
     }
   };

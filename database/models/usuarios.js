@@ -19,14 +19,14 @@ Usuario.init({
             notNull: {
                 msg: "El nombre de usuario no puede ser nulo",
             },
+            is: {
+                args: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
+                msg: "El nombre del usuario solo puede contener letras y espacios"
+            },
             len: {
                 args: [1, 30],
-                msg: "El nombre del usuario debe tener entre 1 y 30 caracteres",
+                msg: "El nombre del usuario debe tener entre 1 y 50 caracteres",
             },
-            isAlpha: {
-                args: true,
-                msg: "El nombre del usuario solo puede contener letras",
-            }
         }
   },
   email: {
